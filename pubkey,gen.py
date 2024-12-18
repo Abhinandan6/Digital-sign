@@ -1,0 +1,50 @@
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import hashes
+
+# Sample private key data in PEM format
+SAMPLE_PRIVATE_KEY_DATA = b"""
+-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAzNVkZPC3SiALGDvrcETBIPa97FnaMcop/0iI3y4vc57upg/J
+BTrZJYKVBSTXRwIIiSo+pnU+AtoIfFFHF5OhkwIk6i1LguatD2Ut/OXOiFtk+69H
+DQW+DCAMfcuTDvm6iEneseFFedJtf7rJX5sJIyMyVXjTyatnExUn6sQowln8f7l9
+hOSQ2eiKUvZAAka0Z2pMtIlL6+NRDmDvSaK270QY5704IZKo0CvuxTqfx8gX5WYX
+WyEDJMM+PVPculTCeTn4VEm6t3ZAuNEeSukNM8Ckg5SmaE1Zq4hMIwaBe9EC+UVC
+xkzHefNLAgrgvQjaVfAdCb+C2s5nPxzWkl2AbwIDAQABAoIBABC1kaiC/c4QBMet
+JPzLZwkg3Qe5oV6Gvtv3106EI9PQkb2TM733pHzLr7YJNinb5RqyCwVPiBz5xfpv
+iOydRZof8SdMmvMqjSXghkVcm8yszp/nbFTddI45qRCJTvhIRUABQqeLwxFNKf3i
+8ggYthXwikEbB6/VCdCuh6CTmuhBAzi9GSej9N1++nWuZ0/r/xFbakaTpo44MMTx
+sBZQVgE8Yi2jBzik4ouM0GV9TfUgcM/5PSabq2FKhoQVTu0E+7+p7s/igtcPw/F6
+WUqC2m+BM0p9cjnaADrL8hPezzVyqlyISgFljweWbVTuboKZJGi0gy9KRRiyN75r
+lCzIyVECgYEA8fR+QNCNoifRvJ2LqBRf+WuPU9fKpEdNH3+WkFWC7ITNe0vErhTo
+Ll2zRGEpwNL/eZzbgze4w1K6C8rU4O79A/Sv7ElWoOyW0I18Jc6onbu0rfajmQ6K
+ltuxMnz3WOR7Uubhh007ynNjkusf8na0Q0GdRThPpOyLOH05rZoN+lECgYEA2LlD
+6MyEHIYO/AePsENcYDWSw3SG7TWynR3TC2cPLvBESO6aJCaArop58fCti2Jz4ZDJ
+/PUab+YOaOcq7/ePioQLMYV2mwOYYojOEwc47ZSOPEUIAKemhWKpm5GiP7L+g8LO
+TE63mVixoBkZjKTrZRpcYJxFZgdjC3vO+NgmXr8CgYEAwTjgToB+az3jd/5U1kCX
+OIeWKX3OPY0XYQ0yP0eay6lus4UZp2/Yz5ZSoEv73RpjnUoP32VzbsC1BM/RW2Rf
+uHYCu+8BeHgYJKqot0SnUXfiXX72vTdoo/sEMm6r1Vh5yAXLm5KpKg8mOOD+XVJA
+uOlAYFQM/odM0yrmEeZSPVECgYByU2kriZe3pFCLS0HVbfNxHVHKodH7mHQcxfrq
+7Pbpf/3Fq3jM0TLY4Fvr8VbbTJhsyYCEXJgRp366gBf6dtHV9EojWZBzvbXJZPmw
+uAKj8dYGnTPXhJknjCCE3JKGn9n7j+xb/LqFvnAVUKhVtTooH3vTyxwg8oyhJjLM
+utmi6QKBgG+J97IHte+VT7cZ2FR7zu0DqO25X74WVWWzI7rsbvIMe0LoDjVTW5im
+XfUm9b7/D8+chvpaU/9kGxGQPwJNsSPuA2i9k82ol73+3kmI/f7h+RasFUQ2wmwV
+8JVVBeKdDXJN3XNmHJ3oa8BtnEVwCe+MQaRaJzhu31oONbd/MZCx
+-----END RSA PRIVATE KEY-----
+"""
+
+# Load the RSA private key from PEM format
+private_key = serialization.load_pem_private_key(SAMPLE_PRIVATE_KEY_DATA, password=None)
+
+# Get the corresponding public key
+public_key = private_key.public_key()
+
+# Serialize the public key to PEM format
+public_key_pem = public_key.public_bytes(
+    encoding=serialization.Encoding.PEM,
+    format=serialization.PublicFormat.SubjectPublicKeyInfo
+)
+
+# Print the public key in PEM format
+print(public_key_pem.decode())
